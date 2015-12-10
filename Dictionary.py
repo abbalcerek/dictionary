@@ -16,6 +16,7 @@ init_db()
 
 def jsonp(func):
     """Wraps JSONified output for JSONP requests."""
+
     @wraps(func)
     def decorated_function(*args, **kwargs):
         callback = request.args.get('callback', False)
@@ -26,16 +27,17 @@ def jsonp(func):
             return current_app.response_class(content, mimetype=mimetype)
         else:
             return func(*args, **kwargs)
+
     return decorated_function
 
 
-#temp
+# temp
 @app.route('/', methods=['GET'])
 def hello_world():
     return 'Hello World!'
 
 
-#get only for debugging
+# get only for debugging
 # @jsonp
 @app.route('/word/<word>', methods=['GET', 'PUT'])
 def put_word(word):
@@ -57,7 +59,7 @@ def get_words():
     return resp
 
 
-#get for debugging only
+# get for debugging only
 @app.route('/delete/<word>', methods=['DELETE', 'GET'])
 def delete(word):
     delete_word(word)

@@ -10,7 +10,7 @@ def save_model(model):
 
 
 def save_word_if_not_exists(word):
-    result = db_session.query(Word)\
+    result = db_session.query(Word) \
         .filter(Word._word == word.word).limit(1)
     for model in result:
         return model

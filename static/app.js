@@ -1,10 +1,10 @@
-
 var Page = React.createClass({
     render: function () {
         return (
             <div className="container">
                 <div className="page-header jumbotron">
                     <h1>{this.props.pageTitle}</h1>
+
                     <p><em>{this.props.pageSubtitle}</em></p>
                 </div>
                 <div nameClass="page-content">
@@ -15,8 +15,8 @@ var Page = React.createClass({
     }
 });
 
-var WordRow = React.createClass( {
-    render: function() {
+var WordRow = React.createClass({
+    render: function () {
         return (
             <div className="word">
                 <div className="value">
@@ -31,7 +31,7 @@ var WordRow = React.createClass( {
                             <span className="glyphicon glyphicon-volume-up" onClick={this.onClickListener}></span>
                             <span className="glyphicon glyphicon-remove" onClick={this.onRemoveListener}></span>
                             <audio controls ref={(ref) => this.audio = ref} className="hidden">
-                                <source src={this.props.speaker} type="audio/mpeg" />
+                                <source src={this.props.speaker} type="audio/mpeg"/>
                                 Your browser does not support the audio element.
                             </audio>
                         </div>
@@ -46,44 +46,44 @@ var WordRow = React.createClass( {
             </div>
         );
     },
-    onClickListener: function() {
+    onClickListener: function () {
         if (this.audio) {
             console.log(this.audio);
             this.audio.play();
         }
     },
-    onRemoveListener: function() {
+    onRemoveListener: function () {
         //this.removeFromServer();
         this.props.onRemove(this.props.word);
     },
-    removeFromServer: function() {
+    removeFromServer: function () {
         console.log("deleting: " + this.props.word);
         $.ajax({
-          url: APPLICATION_PROPERTIES.base_url + "delete/" + this.props.word,
-          type: 'DELETE',
-          dataType: 'jsonp',
-          cache: false,
-          success: function(data) {
-              this.removeFromView();
-              console.log(data);
-          }.bind(this)
+            url: APPLICATION_PROPERTIES.base_url + "delete/" + this.props.word,
+            type: 'DELETE',
+            dataType: 'jsonp',
+            cache: false,
+            success: function (data) {
+                this.removeFromView();
+                console.log(data);
+            }.bind(this)
         });
     },
-    removeFromView: function() {
+    removeFromView: function () {
 
     }
 });
 
 var MeaningList = React.createClass({
-    render: function() {
+    render: function () {
         var meanings = this.props.value;
         var nodes = [];
         if (meanings) {
-            nodes = meanings.map(function(meaning) {
+            nodes = meanings.map(function (meaning) {
                 return (
-                   <li key={meaning.hashCode()}>
-                       {meaning}
-                   </li>
+                    <li key={meaning.hashCode()}>
+                        {meaning}
+                    </li>
                 )
             });
         }
@@ -97,18 +97,18 @@ var MeaningList = React.createClass({
 
 var WordList = React.createClass({
 
-    loadCommentsFromServer: function() {
+    loadCommentsFromServer: function () {
         $.ajax({
-          url: this.props.src,
-          dataType: 'json',
-          cache: false,
-          success: function(data) {
-            this.setState({data: data});
-              console.log(data);
-          }.bind(this),
-          error: function(xhr, status, err) {
-            console.error(this.props.url, <statu></statu>, err.toString());
-          }.bind(this)
+            url: this.props.src,
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+                this.setState({data: data});
+                console.log(data);
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(this.props.url, <statu></statu>, err.toString());
+            }.bind(this)
         });
     },
     handleWordSubmit(wordString) {
@@ -117,7 +117,7 @@ var WordList = React.createClass({
             url: "http://localhost:5000/word/" + wordString,
             dataType: 'jsonp',
             type: 'PUT',
-            success: function(data) {
+            success: function (data) {
                 console.log(data);
                 if (!this.state.data.words) {
                     this.setState(this.state.data.words = [data]);
@@ -129,36 +129,41 @@ var WordList = React.createClass({
                     this.setState({"data": {"words": newWords}});
                 }
             }.bind(this),
-            error: function(xhr, status, err) {
+            error: function (xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
             }.bind(this)
         });
     },
-    handleRemoveWord: function(word) {
+    handleRemoveWord: function (word) {
         console.log("deleting: " + word);
         $.ajax({
-          url: APPLICATION_PROPERTIES.base_url + "delete/" + word,
-          type: 'DELETE',
-          dataType: 'jsonp',
-          cache: false,
-          success: function(data) {
-              this.setState({data: {words: this.state.data.words.filter(
-                  function (wordObject) {return wordObject.word != word})
-              }});
-              console.log(data);
-          }.bind(this)
+            url: APPLICATION_PROPERTIES.base_url + "delete/" + word,
+            type: 'DELETE',
+            dataType: 'jsonp',
+            cache: false,
+            success: function (data) {
+                this.setState({
+                    data: {
+                        words: this.state.data.words.filter(
+                            function (wordObject) {
+                                return wordObject.word != word
+                            })
+                    }
+                });
+                console.log(data);
+            }.bind(this)
         });
     },
 
-    getInitialState: function() {
+    getInitialState: function () {
         return {data: {"words": []}};
     },
-    componentDidMount: function() {
+    componentDidMount: function () {
         this.loadCommentsFromServer();
         setInterval(this.loadCommentsFromServer, this.props.pollInterval);
     },
 
-    render: function() {
+    render: function () {
         var words = this.state.data;
         var rows = [];
         for (var i = 0; i < words.words.length; i++) {
@@ -182,44 +187,44 @@ var WordList = React.createClass({
 });
 
 var WordForm = React.createClass({
-    getInitialState: function() {
+    getInitialState: function () {
         return {word: ''};
     },
-    handleChange: function(e) {
+    handleChange: function (e) {
         this.setState({word: e.target.value});
     },
-    handleSubmit: function(e) {
+    handleSubmit: function (e) {
         e.preventDefault();
         var word = this.state.word.trim();
         if (!word) {
-          return;
+            return;
         }
         this.props.onWordSubmit(word);
-    this.setState({word: ''});
-  },
+        this.setState({word: ''});
+    },
 
-    render: function() {
+    render: function () {
 
         return (
-          <form className="word-form"
-              onSubmit={this.handleSubmit}>
-            <input type="text"
-                   placeholder="New word"
-                   value={this.state.word}
-                   onChange={this.handleChange}
-                />
-            <input type="submit" value="Find" />
-          </form>
+            <form className="word-form"
+                  onSubmit={this.handleSubmit}>
+                <input type="text"
+                       placeholder="New word"
+                       value={this.state.word}
+                       onChange={this.handleChange}
+                    />
+                <input type="submit" value="Find"/>
+            </form>
         );
-  }
+    }
 });
 
 ReactDOM.render(
-  <Page pageTitle="Dictionary" pageSubtitle={"version: " + APPLICATION_PROPERTIES.version}>
-      <WordList src={APPLICATION_PROPERTIES.base_url + "words"}
-                pollInterval={2000}/>
-  </Page>,
-  document.getElementById('content')
+    <Page pageTitle="Dictionary" pageSubtitle={"version: " + APPLICATION_PROPERTIES.version}>
+        <WordList src={APPLICATION_PROPERTIES.base_url + "words"}
+                  pollInterval={2000}/>
+    </Page>,
+    document.getElementById('content')
 );
 
 

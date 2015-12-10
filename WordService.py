@@ -61,7 +61,6 @@ def main():
     word = Word(1, 'book')
     download_page_content(word)
 
+
 if __name__ == "__main__":
     main()
-
-
