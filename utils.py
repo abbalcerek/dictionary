@@ -15,5 +15,7 @@ def prittify_json_string(string):
 
 
 def string_to_dict(string):
-    if not string: return None
+    if not string:
+        return None
+    string = string.replace("null", "None")
     return ast.literal_eval(string)

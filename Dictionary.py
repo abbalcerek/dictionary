@@ -47,14 +47,14 @@ def put_word(word):
         return jsonify({"word": None, "comment": "word not found"})
     save_word_if_not_exists(word_object)
     resp = jsonify(**word_object.to_dict())
-    resp.headers['Access-Control-Allow-Origin'] = 'POST, GET, PUT, OPTIONS, PATCH, DELETE'
+    resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 
 
 @app.route('/words', methods=['GET'])
 def get_words():
     words = [word.to_dict() for word in all_words()]
-    resp = flask.jsonify(**{'words': words})
+    resp = jsonify(**{'words': words})
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 
@@ -64,9 +64,9 @@ def get_words():
 def delete(word):
     delete_word(word)
     print(word)
-    resp = flask.Response(status=202)
+    resp = jsonify({})
     resp.headers["Content-Type"] = "application/json"
-    resp.headers['Access-Control-Allow-Origin'] = 'POST, GET, PUT, OPTIONS, PATCH, DELETE'
+    resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 
 

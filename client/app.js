@@ -53,24 +53,7 @@ var WordRow = React.createClass({
         }
     },
     onRemoveListener: function () {
-        //this.removeFromServer();
         this.props.onRemove(this.props.word);
-    },
-    removeFromServer: function () {
-        console.log("deleting: " + this.props.word);
-        $.ajax({
-            url: APPLICATION_PROPERTIES.base_url + "delete/" + this.props.word,
-            type: 'DELETE',
-            dataType: 'jsonp',
-            cache: false,
-            success: function (data) {
-                this.removeFromView();
-                console.log(data);
-            }.bind(this)
-        });
-    },
-    removeFromView: function () {
-
     }
 });
 
@@ -97,17 +80,14 @@ var MeaningList = React.createClass({
 
 var WordList = React.createClass({
 
-    loadCommentsFromServer: function () {
+    loadWordsFromServer: function () {
         $.ajax({
             url: this.props.src,
-            dataType: 'json',
+            dataType: 'jsonp',
             cache: false,
             success: function (data) {
                 this.setState({data: data});
                 console.log(data);
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(this.props.url, <statu></statu>, err.toString());
             }.bind(this)
         });
     },
@@ -142,6 +122,8 @@ var WordList = React.createClass({
             dataType: 'jsonp',
             cache: false,
             success: function (data) {
+                console.log("data before: ");
+                console.log(data);
                 this.setState({
                     data: {
                         words: this.state.data.words.filter(
@@ -150,6 +132,7 @@ var WordList = React.createClass({
                             })
                     }
                 });
+                console.log("data after: ");
                 console.log(data);
             }.bind(this)
         });
@@ -159,7 +142,7 @@ var WordList = React.createClass({
         return {data: {"words": []}};
     },
     componentDidMount: function () {
-        this.loadCommentsFromServer();
+        this.loadWordsFromServer();
         setInterval(this.loadCommentsFromServer, this.props.pollInterval);
     },
 

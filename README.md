@@ -1,3 +1,3 @@
 # Dictionary
 
-##Simple rest client - server dictionary app with Flask, React.js and Bootstrap.
+##Simple rest client - server app with Flask, SQLAlchemy, React.js and Bootstrap.
