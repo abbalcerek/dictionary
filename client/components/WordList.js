@@ -1,4 +1,9 @@
-var WordList = React.createClass({
+var React = require('react');
+var WordRow = require('./WordRow');
+var WordForm = require('./WordForm');
+var APPLICATION_PROPERTIES = require('./../properties');
+
+module.exports = React.createClass({
 
     loadWordsFromServer: function () {
         $.ajax({

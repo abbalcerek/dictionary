@@ -1,5 +1,5 @@
-from db_config import db_session
-from Word import Word
+from server.db_config import db_session
+from server.Word import Word
 
 
 def save_model(model):

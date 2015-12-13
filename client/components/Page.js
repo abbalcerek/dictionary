@@ -1,16 +1,17 @@
-var Page = React.createClass({displayName: "Page",
+var React = require('react');
+
+module.exports  = React.createClass({
     render: function () {
         return (
-            React.createElement("div", {className: "container"}, 
-                React.createElement("div", {className: "page-header jumbotron"}, 
-                    React.createElement("h1", null, this.props.pageTitle), 
-
-                    React.createElement("p", null, React.createElement("em", null, this.props.pageSubtitle))
-                ), 
-                React.createElement("div", {nameClass: "page-content"}, 
-                    this.props.children
-                )
-            )
+            <div className="container">
+                <div className="page-header jumbotron">
+                    <h1>{this.props.pageTitle}</h1>
+                    <p><em>{this.props.pageSubtitle}</em></p>
+                </div>
+                <div nameClass="page-content">
+                    {this.props.children}
+                </div>
+            </div>
         );
     }
 });

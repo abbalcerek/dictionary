@@ -1,3 +1,3 @@
 # Dictionary
 
-##Simple rest client - server app with Flask, SQLAlchemy, Gulp, React.js and Bootstrap.
+##Simple rest client - server app with Flask, SQLAlchemy, Gulp, Browserify, React.js and Bootstrap.

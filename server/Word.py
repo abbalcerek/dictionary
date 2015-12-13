@@ -1,7 +1,8 @@
 __author__ = 'Adam'
 from sqlalchemy import Column, Integer, String
-from db_config import Base
-import utils
+
+from server.db_config import Base
+from server import utils
 
 
 class Word(Base):

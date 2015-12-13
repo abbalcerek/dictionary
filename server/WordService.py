@@ -1,5 +1,5 @@
 __author__ = 'Adam'
-import utils
+from server import utils
 
 BASE_URL = 'http://dictionary.reference.com/browse/'
 
@@ -57,7 +57,7 @@ def parse_speaker(soup):
 
 def main():
     """tests"""
-    from Word import Word
+    from server.Word import Word
     word = Word(1, 'book')
     download_page_content(word)
 

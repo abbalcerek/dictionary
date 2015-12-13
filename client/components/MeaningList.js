@@ -1,11 +1,14 @@
-var MeaningList = React.createClass({
+var React = require('react');
+var utils = require('./../utils');
+
+module.exports = React.createClass({
     render: function () {
         var meanings = this.props.value;
         var nodes = [];
         if (meanings) {
             nodes = meanings.map(function (meaning) {
                 return (
-                    <li key={meaning.hashCode()}>
+                    <li key={utils.hashCode(meaning)}>
                         {meaning}
                     </li>
                 )

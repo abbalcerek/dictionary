@@ -1,14 +1,12 @@
-from flask import Flask
-import flask
-import WordService
-from Word import Word
-import db_config
-from db_config import *
-from Repository import *
-from flask.ext.jsonpify import jsonify
-
 from functools import wraps
+
+from flask import Flask
+from flask.ext.jsonpify import jsonify
 from flask import request, current_app
+
+from server import WordService
+from server.db_config import *
+from server.Repository import *
 
 app = Flask(__name__)
 init_db()
